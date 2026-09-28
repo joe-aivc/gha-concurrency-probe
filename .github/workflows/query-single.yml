@@ -1,0 +1,14 @@
+name: query-single
+run-name: query-single ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag: { type: string, default: q }
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: workload
+      queue: single
+    steps:
+      - run: echo "start ${{ inputs.tag }} $(date -u +%T)"; sleep 20; echo "end $(date -u +%T)"

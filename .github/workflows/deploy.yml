@@ -1,0 +1,16 @@
+name: deploy
+run-name: deploy ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag: { type: string, default: d }
+      sleep: { type: string, default: "60" }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Deploy-shaped: default queue (single), never cancels in progress.
+    concurrency:
+      group: workload
+      cancel-in-progress: false
+    steps:
+      - run: echo "start ${{ inputs.tag }} $(date -u +%T)"; sleep "${{ inputs.sleep }}"; echo "end $(date -u +%T)"

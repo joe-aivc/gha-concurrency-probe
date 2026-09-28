@@ -1,0 +1,14 @@
+name: query-max
+run-name: query-max ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag: { type: string, default: q }
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: workload
+      queue: max
+    steps:
+      - run: echo "start ${{ inputs.tag }} $(date -u +%T)"; sleep 20; echo "end $(date -u +%T)"

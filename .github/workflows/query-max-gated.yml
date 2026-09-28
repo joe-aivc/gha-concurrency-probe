@@ -1,0 +1,15 @@
+name: query-max-gated
+run-name: query-max-gated ${{ inputs.tag }}
+on:
+  workflow_dispatch:
+    inputs:
+      tag: { type: string, default: qg }
+jobs:
+  query:
+    runs-on: ubuntu-latest
+    environment: gated
+    concurrency:
+      group: workload
+      queue: max
+    steps:
+      - run: echo "start ${{ inputs.tag }} $(date -u +%T)"; sleep 20; echo "end $(date -u +%T)"
